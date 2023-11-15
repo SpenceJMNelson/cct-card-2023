@@ -1,0 +1,647 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.3.6,
+* Autoprefixer: v10.3.1
+* Browsers: >1%
+*/
+
+/*
+	removed roboto and converted scout to a webfont at https://transfonter.org
+
+
+	@import url("https://fonts.googleapis.com/css?family=Roboto&subset=latin-ext");
+* {
+  box-sizing: border-box;
+}
+*/
+
+
+/*notes
+
+paper texture inside of card pulled from here:
+https://www.toptal.com/designers/subtlepatterns/?s=paper
+
+snow fall script found here:
+https://www.balbooa.com/showcase-template/gridbox/falling-snowflakes-animation
+
+*/
+/* ---------  Keyframe Animations --------- */
+@keyframes cardIn {
+  0% {
+    opacity: 0;
+    transform: rotate(87deg) translate(0, -200%);
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(87deg) translate(0, 0);
+  }
+}
+
+/* ENVELOPE SLIDE IN ANIMATION */
+
+@keyframes envelopeIn {
+  0% {
+    opacity: 0;
+    transform:  translate(200%, 0);
+	transform-origin: center;
+  }
+   25% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform:  translate(0, 0);
+    transform-origin: center;
+  }
+}
+
+/* OPEN FLAP */
+
+@keyframes openFlap {
+  0% {
+    transform: rotateX(0deg);
+    transform-origin: top center;
+  }
+
+  60% {
+    transform: rotateX(180deg);
+    transform-origin: top center;
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate(0, 0) rotateX(180deg);
+    transform-origin: top center;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(0, 300px) rotateX(180deg);
+    display: none;
+    transform-origin: top center;
+  }
+}
+
+/* LIFT CARD OUT */
+
+@keyframes liftCardOut {
+  0% {
+    transform: rotate(89deg) translate(0%, 0);
+	transform-origin: center;
+  }
+
+  30% {
+    transform: rotate(79deg) translate(-50%, 0);
+	transform-origin: center;
+  }
+
+  100% {
+    transform:rotate(89deg)  translate(0%, 0);
+    transform-origin: center;
+    z-index: 100;
+  }
+}
+
+/* ENVELOPE DROP ANIMATION */
+
+@keyframes dropEnvelope {
+  0% {
+    opacity: 1;
+    transform:  translate(0, 0%);
+	transform-origin: center;
+
+  }
+
+  100% {
+    opacity: 0;
+    transform:  translate(0, 300px);
+	transform-origin: center;
+
+  }
+}
+
+/* FADE ANIMATION */
+
+@keyframes fadeIn {
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+
+/* ---------  Styles --------- */
+
+body {
+ background-color:#294b7d;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body:before {
+    content: '';
+    background: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+   }
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active  {
+	color: #22afa9;
+}
+
+
+p {
+  font-family: "Scout", Verdana, Arial, serif;
+  font-size: 26px;
+  line-height: 1.2em;
+  padding-left: 10px;
+  font-style: italic;
+}
+
+h5 {
+  text-align: left;
+  font-family: "Scout", Verdana, Arial, serif;
+  font-size: 34px;
+  line-height: 1.2em;
+  padding-left: 10px;
+  margin-bottom: 0;
+  font-style: italic;
+  width:100%;
+}
+
+#snow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.button {
+  background-color: #22afa9;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+
+.envelope-container {
+	 width:700px;
+	 margin: 0 auto;
+	 display: grid;
+	 align-items: center;
+   transition: 1000ms;
+   transition-delay: 0s;
+	  position: absolute;
+	  left: calc(50% - 350px);
+	  top: calc(50% - 320px);
+	  z-index: 1000;
+}
+
+.ceo-signature {
+	width: 60%;
+	margin: 0 auto;
+}
+
+.ceo-signature img {
+	width: 100%;
+	height:auto;
+}
+
+.ceo-name {
+  font-size: 1em;
+  text-transform: uppercase;
+  font-style: normal;
+  font-weight: bold;
+  margin:0 0 .6em 0;
+}
+
+.top-flap {
+	grid-area: 1 / 1 / 2 / 2;
+	z-index: 30;
+}
+
+.envelope-wrapper {
+	grid-area: 1 / 1 / 2 / 2;
+	z-index: 20;
+
+}
+.envelope-back {
+	grid-area: 1 / 1 / 2 / 2;
+}
+
+.envelope-container .top-flap,
+.envelope-container .envelope-wrapper,
+.envelope-container .envelope-back {
+	  animation: envelopeIn 2s alternate cubic-bezier(0.87, -0.41, 0.19, 1.44);
+}
+
+.top-flap.top-flap-open {
+	animation:openFlap 2.5s forwards ease;
+}
+
+.card.top-flap-open-card {
+	animation: liftCardOut 2s forwards ease 2s;
+}
+
+.envelope-wrapper.top-flap-open,
+.envelope-back.top-flap-open  {
+	animation: dropEnvelope 1s forwards  ease 1.5s;
+}
+
+.envelope-container.is-open {
+  top: calc(50% - 100px);
+  transform:rotate(0deg);
+}
+
+.card {
+  perspective: 1500px;
+  position: absolute;
+  left: calc(50% - 200px);
+  top: calc(50% - 275px);
+  transform: rotate(87deg) translate(0, 0);
+  animation: cardIn 2s alternate cubic-bezier(0.87, -0.41, 0.19, 1.44);
+  z-index: 10;
+  transition: 300ms;
+}
+
+.reverse-card-link {
+  display: inline-block;
+	font-size: 1.3rem;
+	background-color: #22afa9;
+  color:#ffffff;
+	font-weight: bold;
+  padding: 0.6em 1em;
+}
+.reverse-card-link:hover {
+	background-color: black;
+  color:#ffffff;
+}
+
+.card.is-reversed {
+	animation: reverseCard 2s forwards alternate cubic-bezier(0.87, -0.41, 0.19, 1.44) 2s;
+}
+
+.card.is-reversed .card-page.cart-page-outside {
+	animation: flipCardFrontMobile 2s forwards cubic-bezier(0.87, -0.41, 0.19, 1.44) 2s;
+}
+
+.cart-page-bottom-message.is-hidden {
+	display: none;
+	transition-delay: .5s;
+	transition-duration:1s;
+}
+
+.artist-content {
+    display:none;
+    position: absolute;
+    top:0;
+    left:0;
+    bottom:0;
+    right:0;
+    background:rgba(255,255,255,1);
+    z-index: 2000;
+}
+
+.artist-content-flex {
+	display:flex;
+}
+
+.artist-image-column img {
+  height: 90vh;
+  width: auto;
+  margin:5vh;
+  max-height: 700px;
+}
+
+.artist-text-column {
+  position: relative;
+  overflow: scroll;
+  height:100vh;
+  padding-bottom: 30px;
+}
+
+.artist-centered-content {
+  padding:30px;
+}
+
+.modal-closelink {
+  position:absolute;
+  left:0;
+  top:0;
+  padding:30px;
+  font-size:36px;
+  cursor: pointer;
+  opacity:.6;
+}
+
+.artist-content p {
+	font-size: 22px;
+  font-style: normal;
+  width:100%;
+}
+
+.artwork-info {
+  text-align: right;
+}
+
+
+
+
+
+.artist-content.is-visible {
+	display: block;
+	animation: fadeIn ease-in 500ms;
+}
+
+.artist-photo {
+	width: 40%;
+}
+.restart {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	transition: opacity 0.5s ease-in-out;
+	opacity: 1;
+	z-index: 1000;
+  background-color:#1d2d4990;
+  padding:15px;
+  border-radius: 100px;
+}
+.restart a{
+	display: flex;
+  text-decoration: none;
+}
+.restart p {
+	font-weight: bold;
+	font-size: 1.2rem;
+	color: white;
+  max-width: 80px;
+  line-height:1;
+  margin:0;
+}
+.restart svg {
+  width:45px;
+  height:auto;
+}
+
+.restart.is-hidden {
+  opacity: 0;
+}
+
+
+
+
+
+
+.card:before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 50px #000;
+  transition: all 0.5s ease-in-out;
+}
+
+
+
+.card,
+.card-page {
+  width: 400px;
+  height: 571px;
+}
+
+
+.card-page {
+  transition: transform 1s ease-in-out;
+  cursor: pointer;
+  position: absolute;
+  outline: 1px solid transparent;
+}
+
+.cart-page-front {
+  transform-origin: 0 50% 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-20deg);
+  z-index: 2;
+}
+
+
+.card:hover .cart-page-front{
+  transform: rotateY(-40deg);
+}
+
+.card.is-opened {
+	display: block;
+	transition: all 0.5s ease-in-out ;
+}
+
+
+.card.is-opened .cart-page-front {
+  transform: rotateY(-180deg);
+}
+
+
+
+
+
+
+
+.cart-page-outside,
+.cart-page-inside {
+  position: absolute;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+
+.cart-page-outside {
+  border: 5px solid #fbfbfb;
+  background: #73ccdc url("images/front-bg-large.jpg") no-repeat center;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+}
+
+
+.cart-page-inside,
+.cart-page-bottom {
+  background-color: #d4d1d0;
+  background-image: url("images/paper-fibers.png");
+  display: flex;
+  box-pack: center;
+  justify-content: center;
+  box-align: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+.cart-page-inside {
+  transform: rotateY(-180deg);
+  border-right: none !important;
+  background-position: 0px 80px;
+}
+
+
+.cart-page-bottom {
+  z-index: 1;
+  border-left: none !important;
+  background-position: -22px 80px;
+}
+
+.cart-page-top-message,
+.cart-page-bottom-message {
+  transform: rotate(-90deg);
+}
+
+.merry-christmas img {
+  width: 250px;
+  height: auto;
+}
+
+.cart-page-bottom-message p {
+  margin:0 0 .6em 0;
+}
+
+.merry-christmas.fade-out img {
+  opacity: 0;
+}
+
+.chicago-community-trust-logo svg {
+	  margin-top: -20px;
+  }
+
+.click-icon {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  bottom: 60px;
+  animation: iconAnimation 1s infinite alternate ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.click-icon svg {
+  width: 96px;
+  height: 96px;
+}
+
+.click-icon-text {
+  display:block;
+  position:absolute;
+  color:#ffffff;
+  width:200px;
+  left:-50px;
+  bottom:-30px;
+  font-family: "Scout", Verdana, Arial, serif;
+  text-align:Center;
+  font-size:24px;
+  font-weight: bold;
+}
+
+.click-icon.is-hidden {
+  opacity: 0;
+  transition-duration:1s;
+}
+
+
+
+
+/* ---------  Responsive --------- */
+
+
+@media (max-width: 1300px) {
+  .artist-content {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .artist-content-flex {
+  	display:block;
+  }
+
+  .artist-text-column {
+    display: block;
+    overflow: hidden;
+    padding:30px;
+    height:auto;
+  }
+
+  .artist-image-column img {
+    width:90%;
+    height: auto;
+    margin:0 auto;
+    display: block;
+    max-height: auto;
+  }
+  .artist-centered-content {
+    padding:0px;
+  }
+
+  .artist-text-column {
+    padding:20px;
+  }
+
+}
+
+@media (max-width: 600px) {
+  .mobile-scale {
+    transform: scale(.66);
+    transform-origin:center;
+    height:100%;
+    width:100%;
+    position: absolute;
+  }
+}
+
+@media (max-width: 500px) {
+  .mobile-scale {
+    transform: scale(.5);
+    transform-origin:center;
+    height:100%;
+    width:100%;
+    position: absolute;
+  }
+}
+
+
+
+/* ---------  Browser Hacks --------- */
+
+/* Safari 11+ */
+@media not all and (min-resolution:.001dpcm)
+{ @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+
+}}
+
+/* Safari 10.1 */
+@media not all and (min-resolution:.001dpcm){
+@supports (-webkit-appearance:none) and (not (stroke-color:transparent)) {
+ 
+}}
+
+/* Safari 6.1-10.0 (but not 10.1) */
+@media screen and (min-color-index:0) and(-webkit-min-device-pixel-ratio:0){
+@media {
+  
+}}
